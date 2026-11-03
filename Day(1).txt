@@ -1,0 +1,152 @@
+SQL*Plus: Release 11.2.0.1.0 Production on Sun Jul 26 22:55:34 2026
+
+Copyright (c) 1982, 2010, Oracle.  All rights reserved.
+
+Enter user-name: A243@db2021
+Enter password:
+
+Connected to:
+Oracle Database 11g Release 11.2.0.1.0 - Production
+
+SQL> create table student
+  2  (Regno number(10),
+  3  name varchar2(10),
+  4  department varchar(5),
+  5  phone number(10)
+  6  );
+
+Table created.
+
+SQL> create table student2 as select * from student;
+
+Table created.SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+
+SQL> desc student2
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+
+SQL> create table student3 as select Regno,name,department from student;
+
+Table created.
+
+SQL> desc student3
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+
+SQL> insert into student values(101,'Alex','CSE',1236547890);
+
+1 row created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+
+SQL> insert into student values(&Regno,'&name','&department',&phone);
+Enter value for regno: 102
+Enter value for name: ravi
+Enter value for department: Ece
+Enter value for phone: 9988776655
+old   1: insert into student values(&Regno,'&name','&department',&phone)
+new   1: insert into student values(102,'ravi','Ece',9988776655)
+
+1 row created.
+
+SQL> insert into student values(&Regno,'&name','&department',&phone);
+Enter value for regno: 103
+Enter value for name: muni
+Enter value for department: MEC
+Enter value for phone: 2345678910
+old   1: insert into student values(&Regno,'&name','&department',&phone)
+new   1: insert into student values(103,'muni','MEC',2345678910)
+
+1 row created.SQL> insert into student values(&Regno,'&name','&department',&phone);
+Enter value for regno: 104
+Enter value for name: prasadu
+Enter value for department: CSE
+Enter value for phone: 9876543210
+old   1: insert into student values(&Regno,'&name','&department',&phone)
+new   1: insert into student values(104,'prasadu','CSE',9876543210)
+
+1 row created.
+
+SQL> select * from student;
+
+     REGNO NAME       DEPAR      PHONE
+---------- ---------- ----- ----------
+       101 Alex       CSE   1236547890
+       102 ravi       Ece   9988776655
+       103 muni       MEC   2345678910
+       104 prasadu    CSE   9876543210
+
+SQL> drop table student3;
+
+Table dropped.SQL> insert into student2 select * from student;
+
+4 rows created.
+
+SQL> alter table student add Gender char;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+ GENDER                                             CHAR(1)
+
+SQL> rename student2 to student1;
+
+Table renamed.SQL> select * from student1;
+
+     REGNO NAME       DEPAR      PHONE
+---------- ---------- ----- ----------
+       101 Alex       CSE   1236547890
+       102 ravi       Ece   9988776655
+       103 muni       MEC   2345678910
+       104 prasadu    CSE   9876543210
+QL> create table student3 as select * from student where 1>2;
+
+Table created.
+
+SQL> desc student3;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+ GENDER                                             CHAR(1)
+
+SQL> alter table student drop column gender;
+
+Table altered.
+
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ REGNO                                              NUMBER(10)
+ NAME                                               VARCHAR2(10)
+ DEPARTMENT                                         VARCHAR2(5)
+ PHONE                                              NUMBER(10)
+
+SQL>

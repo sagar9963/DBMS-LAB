@@ -1,0 +1,87 @@
+SQL> CREATE TABLE STUDENT_NEW (
+  2      student_id INT,
+  3      student_name VARCHAR(10),
+  4      email VARCHAR(20),
+  5      department_id INT,
+  6      marks DECIMAL(5,2)
+  7  );
+
+Table created.
+
+SQL> DESC STUDENT_NEW;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                         NUMBER(38)
+ STUDENT_NAME                                       VARCHAR2(10)
+ EMAIL                                              VARCHAR2(20)
+ DEPARTMENT_ID                                      NUMBER(38)
+ MARKS                                              NUMBER(5,2)
+
+SQL> ALTER TABLE STUDENT_NEW
+  2  ADD CONSTRAINT pk_student_new
+  3  PRIMARY KEY (student_id);
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT_NEW
+  2  ADD CONSTRAINT uq_student_new_email
+  3  UNIQUE (email);
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT_NEW
+  2  ADD CONSTRAINT chk_student_new_marks
+  3  CHECK (marks >= 0 AND marks <= 100);
+
+Table altered.
+SQL> DESC STUDENT_NEW;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(38)
+ STUDENT_NAME                                       VARCHAR2(10)
+ EMAIL                                              VARCHAR2(20)
+ DEPARTMENT_ID                                      NUMBER(38)
+ MARKS                                              NUMBER(5,2)
+
+SQL> ALTER TABLE STUDENT_NEW
+  2  ADD CONSTRAINT fk_student_new_dept
+  3  FOREIGN KEY (DEPARTMENT_ID)
+  4  REFERENCES DEPT(DEPTNO);
+
+Table altered.
+SQL> INSERT INTO student_new
+  2  VALUES (101, 'venkatram', 'venkatram@gmail.com', 10, 80);
+
+1 row created.
+
+SQL> insert into student_new
+  2  values(102,'Prasadu','prasadu@gmail.com',10,90);
+
+1 row created.
+
+SQL> insert into student_new
+  2  values(103,'Ravi','ravi@gmail.com',10,80);
+
+1 row created.
+
+SQL> SELECT * FROM student_new;
+
+STUDENT_ID STUDENT_NA EMAIL                DEPARTMENT_ID      MARKS
+---------- ---------- -------------------- ------------- ----------
+       101 venkatram  venkatram@gmail.com             10         80
+       102 Prasadu    prasadu@gmail.com               10         90
+       103 Ravi       ravi@gmail.com                  10         80
+
+SQL> insert into student_new
+  2  values(104,'Alex','alex@gmail.com',20,80);
+
+1 row created.SQL> SELECT constraint_name, constraint_type
+  2  FROM user_constraints
+  3  WHERE table_name = 'STUDENT_NEW';
+
+CONSTRAINT_NAME                C
+------------------------------ -
+PK_STUDENT_NEW                 P
+UQ_STUDENT_NEW_EMAIL           U
+CHK_STUDENT_NEW_MARKS          C
+FK_STUDENT_NEW_DEPT            R

@@ -1,0 +1,212 @@
+SQL> desc Employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                     NOT NULL NUMBER(4)
+ ENAME                                              VARCHAR2(20)
+ JOB                                                DATE
+ SAL                                                NUMBER(5)
+
+SQL> select *from Employee;
+
+     EMPNO ENAME                JOB              SAL
+---------- -------------------- --------- ----------
+      1001 Ravi                 01-JAN-24      25000
+      1002 Priya                15-FEB-24      30000
+      1003 venkatram            07-JAN-24      35000
+      1004 Prasadu              09-JAN-24      35000
+
+SQL> create table studentdata(
+  2  Regno Number(4) Constraint Emp_pkey Primary Key,
+  3  Sname Varchar2(20),
+  4  DOB Date,
+  5  Fees Number(5));
+
+Table created.
+
+SQL> INSERT INTO studentdata
+  2  VALUES (1001, 'Venkatram', TO_DATE('15-JAN-2005','DD-MON-YYYY'), 25000);
+
+1 row created.
+
+SQL> INSERT INTO studentdata
+  2  VALUES (1002, 'Priya', TO_DATE('20-FEB-2004','DD-MON-YYYY'), 30000);
+
+1 row created.
+
+SQL> INSERT INTO studentdata
+  2  VALUES (1003, 'Karthik', TO_DATE('10-MAR-2005','DD-MON-YYYY'), 28000);
+
+1 row created.
+
+SQL> SELECT * FROM studentdata;
+
+     REGNO SNAME                DOB             FEES
+---------- -------------------- --------- ----------
+      1003 Venkatram            15-JAN-05      25000
+      1002 Priya                20-FEB-04      30000
+      1003 Karthik              10-MAR-05      28000
+
+SQL> INSERT INTO studentdata
+  2  VALUES (1001, 'Rahul', TO_DATE('12-APR-2005','DD-MON-YYYY'), 26000);
+
+1 row created.
+
+SQL> SELECT * FROM studentdata;
+
+     REGNO SNAME                DOB             FEES
+---------- -------------------- --------- ----------
+       159 Venkatram            15-JAN-05      25000
+      1002 Priya                20-FEB-04      30000
+      1003 Karthik              10-MAR-05      28000
+      1001 Rahul                12-APR-05      26000 
+
+SQL> CREATE TABLE Employee2 (
+  2      Empno NUMBER(4),
+  3      Ename VARCHAR2(20),
+  4      Sal NUMBER(5),
+  5      Deptno NUMBER(2)
+  6          CONSTRAINT Emp2_Fkey
+  7          REFERENCES Dept(Deptno)
+  8  );
+
+Table created.
+
+SQL> INSERT INTO Employee2 VALUES (1001, 'Ravi', 25000, 10);
+
+1 row created.
+
+SQL> INSERT INTO Employee2 VALUES (1002, 'Priya', 30000, 20);
+
+1 row created.
+SQL> select * from employee2;
+
+     EMPNO ENAME                       SAL     DEPTNO
+---------- -------------------- ---------- ----------
+      1001 Ravi                      25000         10
+      1002 Priya                     30000         20
+
+SQL>CREATE TABLE Employee3 (
+  2      Empno NUMBER(4),
+  3      Ename VARCHAR2(20),
+  4      Sal NUMBER(5) CONSTRAINT emp_sal_ck CHECK (Sal > 5000 AND Sal < 10000),
+  5      Dept NUMBER(10)
+  6  );
+SQL> INSERT INTO Employee3 VALUES (1001, 'Ravi', 6000, 10);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Employee3 VALUES (1002, 'Priya', 8000, 20);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Employee3 VALUES (1003, 'Arun', 9500, 10);
+
+1 row created.
+
+SQL>
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM Employee3;
+
+     EMPNO ENAME                       SAL       DEPT
+---------- -------------------- ---------- ----------
+      1001 Ravi                       6000         10
+      1002 Priya                      8000         20
+      1003 Arun                       9500         10
+-----------------------------------------------------
+SQL> CREATE TABLE Department2 (
+  2      Department_ID NUMBER(4) CONSTRAINT dept2_pkey PRIMARY KEY,
+  3      Department_Name VARCHAR2(20)
+  4  );
+
+Table created.
+
+SQL> INSERT INTO Department2 VALUES (101, 'Computer Science');
+
+1 row created.
+
+SQL> INSERT INTO Department2 VALUES (102, 'Mathematics');
+
+1 row created.
+
+SQL> INSERT INTO Department2 VALUES (103, 'Physics');
+
+1 row created.
+
+SQL>
+SQL> CREATE TABLE Student2 (
+  2      Student_ID NUMBER(4) CONSTRAINT stu2_pkey PRIMARY KEY,
+  3      Student_Name VARCHAR2(20) CONSTRAINT stu2_name_nn NOT NULL,
+  4      Email VARCHAR2(30) CONSTRAINT stu2_email_un UNIQUE,
+  5      Age NUMBER(2) CONSTRAINT stu2_age_ck CHECK (Age >= 18),
+  6      Department_ID NUMBER(4),
+  7      CONSTRAINT stu2_dept_fk FOREIGN KEY (Department_ID)
+  8      REFERENCES Department2(Department_ID)
+  9  );
+
+Table created.
+
+SQL> DESC DEPT;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEPTNO                                    NOT NULL NUMBER(2)
+ DNAME                                              VARCHAR2(20)
+ CREATE TABLE Student4 (
+  2      Student_ID NUMBER(4) CONSTRAINT stu2_pkey PRIMARY KEY,
+  3      Student_Name VARCHAR2(20) CONSTRAINT stu2_name_nn NOT NULL,
+  4      Email VARCHAR2(30) CONSTRAINT stu2_email_un UNIQUE,
+  5      Age NUMBER(2) CONSTRAINT stu2_age_ck CHECK (Age >= 18),
+  6      Deptno NUMBER(2),
+  7      CONSTRAINT stu2_dept_fk FOREIGN KEY (Deptno)
+  8      REFERENCES DEPT(Deptno)
+  9  );
+SQL> DESC Student4;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                NOT NULL NUMBER(4)
+ STUDENT_NAME                              NOT NULL VARCHAR2(20)
+ EMAIL                                              VARCHAR2(30)
+ AGE                                                NUMBER(2)
+ DEPARTMENT_ID                                      NUMBER(4)
+
+SQL> SELECT * FROM DEPT;
+
+    DEPTNO DNAME
+---------- --------------------
+        10 HR
+        20 SALES
+Table altered.
+
+SQL> INSERT INTO Student4 VALUES (1, 'Ravi', 'ravi@gmail.com', 20, 10);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Student4 VALUES (2, 'Priya', 'priya@gmail.com', 19, 20);
+
+1 row created.
+
+SQL>
+SQL> INSERT INTO Student4 VALUES (3, 'Arun', 'arun@gmail.com', 21, 10);
+
+1 row created.
+
+SQL>
+SQL> SELECT * FROM Student4;
+
+STUDENT_ID STUDENT_NAME         EMAIL                                 AGE DEPARTMENT_ID
+
+---------- -------------------- ------------------------------ -----------------------
+
+         1  Ravi                 ravi@gmail.com                         20    10
+           
+
+         2 Priya                priya@gmail.com                        19     20
+         
+
+         3 Arun                 arun@gmail.com                         21     10
+          

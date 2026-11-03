@@ -1,0 +1,311 @@
+SQL> CREATE TABLE STUDENT (
+  2      STUDENT_ID NUMBER,
+  3      NAME VARCHAR2(50),
+  4      AGE NUMBER,
+  5      DEPARTMENT VARCHAR2(30),
+  6      MARKS NUMBER
+  7  );
+
+Table created.
+
+SQL> desc STUDENT
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                         NUMBER
+ NAME                                               VARCHAR2(50)
+ AGE                                                NUMBER
+ DEPARTMENT                                         VARCHAR2(30)
+ MARKS                                              NUMBER
+
+SQL> INSERT INTO STUDENT VALUES(101, 'YASHASWINI',20,'CSE',90);
+
+1 row created.
+SQL> select *from student;
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS
+------------------------------ ----------
+       101 YASHASWINI                                                 20
+CSE                                    90
+
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS
+------------------------------ ----------
+       101 YASHASWINI                                                 20
+CSE                                    90
+
+
+SQL> INSERT INTO STUDENT VALUES(
+  2  101,
+  3  'YASHASWINI',
+  4  18,
+  5  'CSE',
+  6  90
+  7  );
+
+1 row created.
+
+SQL> desc student
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_ID                                         NUMBER
+ NAME                                               VARCHAR2(50)
+ AGE                                                NUMBER
+ DEPARTMENT                                         VARCHAR2(30)
+ MARKS                                              NUMBER
+
+SQL> select * from student;
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS
+------------------------------ ----------
+       101 YASHASWINI                                                 20
+CSE                                    90
+
+       101 YASHASWINI                                                 18
+CSE                                    90
+
+
+SQL> drop table STUDENT
+  2
+SQL> drop table STUDENT;
+
+Table dropped.
+
+SQL> CREATE TABLE STUDENT (
+  2      STUDENT_ID NUMBER,
+  3      NAME VARCHAR2(50),
+  4      AGE NUMBER,
+  5      DEPARTMENT VARCHAR2(30),
+  6      MARKS NUMBER
+  7  );
+
+Table created.
+
+SQL> ALTER TABLE STUDENT
+  2  ADD CONSTRAINTS STUDENT_PK PRIMARY KEY(student_id);
+
+Table altered.
+
+SQL> alter table STUDENT
+  2  add constraint student_name_uk unique (name);
+
+Table altered.
+
+SQL> alter table STUDENT
+  2  ADD constraint student_age_chk check (age >=18);
+
+Table altered.
+
+SQL> create table department (
+  2  dept_id number primary key,
+  3  dept_name varchar2(30)
+  4  );
+
+Table created.
+
+SQL> insert into department values (10,'cse');
+
+1 row created.
+
+SQL> insert into department values(20,'eee');
+
+1 row created.
+
+SQL> insert into department values(30,'ece');
+
+1 row created.
+
+SQL> select *from department;
+
+   DEPT_ID DEPT_NAME
+---------- ------------------------------
+        10 cse
+        20 eee
+        30 ece
+
+SQL> alter table STUDENT ADD Constraint
+  2
+SQL> ALTER TABLE STUDENT
+  2  ADD DEPT_ID NUMBER;
+
+Table altered.
+
+SQL> alter table student
+  2  add constraint student_dept_fk
+  3  foreign key(dept_id)
+  4  references departmen(dept_id);
+references departmen(dept_id)
+           *
+ERROR at line 4:
+ORA-00942: table or view does not exist
+
+
+SQL> alter table STUDENT
+  2  ADD constraint student_dept_fk
+  3  foreign key(dept_id)
+  4  references department(dept_id);
+
+Table altered.
+
+SQL> INSERT INTO STUDENT VALUES (101, 'Yashaswini', 20, 'CSE', 85, 10);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT VALUES (102, 'Priya', 21, 'AIML', 90, 20);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT VALUES (103, 'Rahul', 22, 'ECE', 78, 30);
+
+1 row created.
+
+SQL> select * from STUDENT
+  2
+SQL> select * from STUDENT;
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS    DEPT_ID
+------------------------------ ---------- ----------
+       101 Yashaswini                                                 20
+CSE                                    85         10
+
+       102 Priya                                                      21
+AIML                                   90         20
+
+       103 Rahul                                                      22
+ECE                                    78         30
+
+
+SQL> ALTER TABLE STUDENT
+  2  MODIFY NAME CONSTRAINT STUDENT_NAME_NN NOT NULL;
+
+Table altered.
+
+SQL> INSERT INTO STUDENT
+  2  VALUES (104, NULL, 20, 'CSE', 80, 10);
+
+
+SQL> ALTER TABLE STUDENT
+  2  MODIFY MARKS DEFAULT 50;
+
+Table altered.
+
+SQL> INSERT INTO STUDENT
+  2  (STUDENT_ID, NAME, AGE, DEPARTMENT, DEPT_ID)
+  3  VALUES (105, 'Kiran', 20, 'CSE', 10);
+
+1 row created.
+
+SQL> SELECT *FROM STUDENT;
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS    DEPT_ID
+------------------------------ ---------- ----------
+       101 Yashaswini                                                 20
+CSE                                    85         10
+
+       102 Priya                                                      21
+AIML                                   90         20
+
+       103 Rahul                                                      22
+ECE                                    78         30
+
+
+STUDENT_ID NAME                                                      AGE
+---------- -------------------------------------------------- ----------
+DEPARTMENT                          MARKS    DEPT_ID
+------------------------------ ---------- ----------
+       105 Kiran                                                      20
+CSE                                    50         10
+
+
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT
+  2  DISABLE ALL CONSTRAINTS;
+DISABLE ALL CONSTRAINTS
+            *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option
+
+
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_NAME_UK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_AGE_CHK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  DISABLE CONSTRAINT STUDENT_DEPT_FK;
+
+Table altered.
+
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_PK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_NAME_UK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_AGE_CHK;
+
+Table altered.
+
+SQL>
+SQL> ALTER TABLE STUDENT
+  2  ENABLE CONSTRAINT STUDENT_DEPT_FK;
+
+Table altered.
+
+SQL> Alter table STUDENT drop constraint
+  2  STUDENT_PK;
+
+Table altered.
+
+SQL>
